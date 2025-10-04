@@ -50,5 +50,10 @@ class User extends Authenticatable
         // 'email' => Encrypted::class,
         // 'nim' => Encrypted::class,
     ];
+
+  public function mataKuliahs()
+    {
+        return $this->hasMany(MataKuliah::class);
+    }
 }
 
