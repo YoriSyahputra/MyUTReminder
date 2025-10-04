@@ -1,8 +1,8 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
-
-        <!-- Name -->
+    <div class="p-6">
+        <p class="text-sm">Registrasi sekarang tersedia di halaman utama. <a href="{{ url('/') }}" class="text-indigo-600 hover:underline">Kembali ke beranda</a></p>
+    </div>
+</x-guest-layout>
          <div>
             <x-input-label for="nim" :value="__('NIM')" />
             <x-text-input id="nim" class="block mt-1 w-full h-200" type="num" name="nim" :value="old('nim')" required autofocus autocomplete="nim" />
