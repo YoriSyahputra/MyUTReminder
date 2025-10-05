@@ -98,6 +98,7 @@
             @endif
         </div>
         
+        {{-- ========== KONTEN BOX 3 (Tenggat Waktu Terdekat) ========== --}}
         <div class="div3 flex flex-col">
             <h3 class="text-lg font-bold mb-4">Tenggat Terdekat</h3>
             <div id="upcoming-tasks-list" class="space-y-4 overflow-y-auto pr-2">
@@ -105,24 +106,63 @@
             </div>
         </div>
         
+        {{-- ========== KONTEN BOX 4 (Aksi Cepat) ========== --}}
         <div class="div4 flex items-center justify-center gap-4">
-    <a href="{{ route('matakuliah.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-500 active:bg-blue-700 focus:outline-none focus:border-blue-700 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">
-        Tambah MatKul
-    </a>
-    <a href="{{ route('matakuliah.index') }}" class="inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-green-500 active:bg-green-700 focus:outline-none focus:border-green-700 focus:ring ring-green-300 disabled:opacity-25 transition ease-in-out duration-150">
-        Lihat Tugas
-    </a>
-</div>
-        <div class="div5">5</div>
+            <a href="{{ route('matakuliah.create') }}" class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-500 active:bg-indigo-700 focus:outline-none focus:border-indigo-700 focus:ring ring-indigo-300 disabled:opacity-25 transition ease-in-out duration-150">
+                Tambah Tugas
+            </a>
+            <a href="{{ route('matakuliah.index') }}" class="inline-flex items-center px-4 py-2 bg-gray-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-500 active:bg-gray-700 focus:outline-none focus:border-gray-700 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150">
+                Lihat Semua
+            </a>
+        </div>
+
+        {{-- ========== KONTEN BOX 5 (Daftar Rinci Tugas) ========== --}}
+        <div class="div5 flex flex-col">
+            <h3 class="text-lg font-bold mb-4">Daftar Rinci Tugas (Belum Selesai)</h3>
+            <div class="flex-grow overflow-y-auto">
+                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                    <thead class="bg-gray-50 dark:bg-gray-800">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Status</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Nama Tugas</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Mata Kuliah</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Tenggat</th>
+                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tasks-table-body" class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                        {{-- Baris tabel akan diisi oleh JavaScript --}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
     
     <style>
-        .parent { display: grid; grid-template-columns: repeat(5, 1fr); grid-template-rows: repeat(5, 1fr); gap: 16px; padding: 20px; min-height: 80vh; }
+        .parent {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            /* --- PERBAIKAN UTAMA CSS --- */
+            grid-template-rows: 1fr 1fr 1fr auto minmax(0, 2fr);
+            gap: 16px;
+            padding: 20px;
+            min-height: 80vh;
+        }
         .div1, .div2, .div3, .div4, .div5 { background-color: #ffffff; border-radius: 20px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); padding: 20px; transition: all 0.3s ease; }
         @media (prefers-color-scheme: dark) { .div1, .div2, .div3, .div4, .div5 { background-color: rgb(31, 41, 55); box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); color: #ffffff; } }
-        .div1 { grid-area: 1 / 1 / 5 / 2; } .div2 { grid-area: 1 / 2 / 5 / 5; } .div3 { grid-area: 1 / 5 / 4 / 6; }
-        .div4 { grid-area: 4 / 5 / 5 / 6; } .div5 { grid-area: 5 / 1 / 6 / 6; }
-        .div1:hover, .div2:hover, .div3:hover, .div4:hover, .div5:hover { transform: translateY(-5px); box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); }
+        
+        .div1 { grid-area: 1 / 1 / 5 / 2; }
+        .div2 { grid-area: 1 / 2 / 5 / 5; }
+        .div3 { 
+            grid-area: 1 / 5 / 4 / 6;
+            min-height: 0; /* <-- Ini penting agar overflow bekerja */
+        }
+        .div4 { grid-area: 4 / 5 / 5 / 6; }
+        .div5 { 
+            grid-area: 5 / 1 / 6 / 6;
+            min-height: 0; /* Mencegah bug flexbox/grid di row terakhir */
+        }
+
         .status-option-inline.active { background-color: rgb(79 70 229 / 1); color: white; }
         .dark .status-option-inline.active { background-color: rgb(79 70 229 / 1); }
         @media (max-width: 768px) { .parent { grid-template-columns: 1fr; grid-template-rows: auto; } .div1, .div2, .div3, .div4, .div5 { grid-column: 1 / -1; grid-row: auto; } }
@@ -144,9 +184,12 @@
     
     {{-- ================= SCRIPT 2: UNTUK BOX 2 (CHART INTERAKTIF & FILTER) ================= --}}
     <script>
+        let allTasks = []; // Dibuat global agar bisa diakses script lain
+        let updateDashboard; // Dibuat global agar bisa diakses script lain
+
         document.addEventListener('DOMContentLoaded', function () {
             @if($totalMataKuliah > 0)
-                const allTasks = @json($allMataKuliahsForJs).map(task => {
+                allTasks = @json($allMataKuliahsForJs).map(task => {
                     task.jadwalDate = new Date(task.jadwal);
                     return task;
                 });
@@ -175,8 +218,7 @@
                 yearFilter.value = currentYear;
                 
                 const timeSeriesChart = new Chart(chartCtx, {
-                    type: 'line',
-                    data: { labels: [], datasets: [] },
+                    type: 'line', data: { labels: [], datasets: [] },
                     options: {
                         responsive: true, maintainAspectRatio: false,
                         scales: { y: { beginAtZero: true, ticks: { color: textColor, stepSize: 1 } }, x: { ticks: { color: textColor } } },
@@ -197,30 +239,25 @@
                     }
                 });
 
-                function updateDashboard() {
+                updateDashboard = function() {
                     const selectedMatkuls = Array.from(matkulCheckboxes).filter(cb => cb.checked).map(cb => cb.value);
                     const selectedMonth = parseInt(monthFilter.value, 10);
                     const selectedYear = parseInt(yearFilter.value, 10);
-
                     timeFilteredTasks = allTasks.filter(task => {
                         const statusMatch = (selectedStatus === 'Semua') ? true : (task.status === selectedStatus);
                         const courseMatch = selectedMatkuls.includes(task.nama_matkul);
                         const timeMatch = task.jadwalDate.getMonth() === selectedMonth && task.jadwalDate.getFullYear() === selectedYear;
                         return statusMatch && courseMatch && timeMatch;
                     });
-                    
                     const daysInMonth = new Date(selectedYear, selectedMonth + 1, 0).getDate();
                     const chartLabels = Array.from({ length: daysInMonth }, (_, i) => i + 1);
-
                     const newDatasets = [];
                     selectedMatkuls.forEach((matkul, index) => {
                         const dataForMatkul = Array(daysInMonth).fill(0);
                         const tasksForMatkul = timeFilteredTasks.filter(t => t.nama_matkul === matkul);
                         tasksForMatkul.forEach(task => {
                             const dayOfMonth = task.jadwalDate.getDate();
-                            if (dayOfMonth > 0 && dayOfMonth <= daysInMonth) {
-                                dataForMatkul[dayOfMonth - 1] += 1;
-                            }
+                            if (dayOfMonth > 0 && dayOfMonth <= daysInMonth) { dataForMatkul[dayOfMonth - 1] += 1; }
                         });
                         newDatasets.push({
                             label: matkul, data: dataForMatkul,
@@ -228,13 +265,12 @@
                             fill: false, tension: 0.1
                         });
                     });
-
                     timeSeriesChart.data.labels = chartLabels;
                     timeSeriesChart.data.datasets = newDatasets;
                     timeSeriesChart.update();
-
                     updateSummary(selectedMatkuls, timeFilteredTasks);
-                    updateUpcomingTasks(allTasks); // Panggil fungsi Box 3
+                    updateUpcomingTasks(allTasks);
+                    updateTasksTable(allTasks);
                 }
                 
                 function updateSummary(selectedMatkuls, tasks) {
@@ -297,23 +333,19 @@
             return `dalam ${diffDays} hari`;
         }
 
-        function updateUpcomingTasks(allTasks) {
+        function updateUpcomingTasks(tasks) {
             const upcomingTasksContainer = document.getElementById('upcoming-tasks-list');
             if (!upcomingTasksContainer) return;
-
             upcomingTasksContainer.innerHTML = '';
             const now = new Date();
-
-            const upcoming = allTasks
+            const upcoming = tasks
                 .filter(task => task.status === 'Belum Selesai' && task.jadwalDate >= now)
                 .sort((a, b) => a.jadwalDate - b.jadwalDate)
                 .slice(0, 4);
-
             if (upcoming.length === 0) {
                 upcomingTasksContainer.innerHTML = `<p class="text-sm text-gray-500 dark:text-gray-400">Tidak ada tugas mendatang.</p>`;
                 return;
             }
-
             upcoming.forEach(task => {
                 const timeRemaining = formatTimeRemaining(task.jadwalDate);
                 const taskElement = `
@@ -328,6 +360,130 @@
                 upcomingTasksContainer.innerHTML += taskElement;
             });
         }
+    </script>
+
+    {{-- ================= SCRIPT 4: UNTUK BOX 5 (TABEL TUGAS INTERAKTIF) ================= --}}
+    <script>
+        function formatDate(taskDate) {
+            let date = new Date(taskDate);
+            return `${date.getDate().toString().padStart(2, '0')}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getFullYear()}`;
+        }
+
+        function attachEventListeners() {
+            const tableBody = document.getElementById('tasks-table-body');
+            
+            tableBody.addEventListener('change', function(e) {
+                if (e.target.matches('.task-status-checkbox')) {
+                    handleStatusChange(e);
+                }
+            });
+
+            tableBody.addEventListener('click', function(e) {
+                if (e.target.matches('.delete-task-button')) {
+                    handleDeleteTask(e);
+                }
+            });
+        }
+
+        function handleStatusChange(e) {
+            const taskId = e.target.dataset.taskId;
+            const newStatus = e.target.checked ? 'Selesai' : 'Belum Selesai';
+
+            fetch(`/matakuliah/${taskId}/status`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: JSON.stringify({ status: newStatus })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const taskIndex = allTasks.findIndex(t => t.id == taskId);
+                    if(taskIndex !== -1) {
+                        allTasks[taskIndex].status = newStatus;
+                    }
+                    updateDashboard(); 
+                } else {
+                    alert('Gagal memperbarui status.');
+                    e.target.checked = !e.target.checked;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Terjadi kesalahan.');
+                e.target.checked = !e.target.checked;
+            });
+        }
+
+        function handleDeleteTask(e) {
+            e.preventDefault();
+            const button = e.currentTarget;
+            const taskId = button.dataset.taskId;
+            
+            if (confirm('Apakah Anda yakin ingin menghapus tugas ini?')) {
+                fetch(`/matakuliah/${taskId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const taskIndex = allTasks.findIndex(t => t.id == taskId);
+                        if(taskIndex !== -1) {
+                            allTasks.splice(taskIndex, 1);
+                        }
+                        updateDashboard();
+                    } else {
+                        alert(data.message || 'Gagal menghapus tugas.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan saat menghapus tugas.');
+                });
+            }
+        }
+
+        function updateTasksTable(tasks) {
+            const tableBody = document.getElementById('tasks-table-body');
+            if (!tableBody) return;
+
+            const unfinishedTasks = tasks
+                .filter(task => task.status === 'Belum Selesai')
+                .sort((a, b) => a.jadwalDate - b.jadwalDate);
+
+            if (unfinishedTasks.length === 0) {
+                tableBody.innerHTML = `<tr><td colspan="5" class="px-6 py-4 text-center text-gray-500">Tidak ada tugas yang belum selesai.</td></tr>`;
+                return;
+            }
+
+            let tableRows = '';
+            unfinishedTasks.forEach(task => {
+                const editUrl = `{{ url('matakuliah') }}/${task.id}/edit`;
+                tableRows += `
+                    <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            <input type="checkbox" class="task-status-checkbox rounded text-indigo-600" data-task-id="${task.id}">
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">${task.tugas}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">${task.nama_matkul}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-300">${formatDate(task.jadwalDate)}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-4">
+                            <a href="${editUrl}" class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">Edit</a>
+                            <button data-task-id="${task.id}" class="delete-task-button text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300">Hapus</button>
+                        </td>
+                    </tr>
+                `;
+            });
+            tableBody.innerHTML = tableRows;
+        }
+
+        // Jalankan attachEventListeners sekali saat DOM siap
+        document.addEventListener('DOMContentLoaded', attachEventListeners);
     </script>
     @endpush
 </x-app-layout>

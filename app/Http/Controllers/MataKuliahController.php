@@ -54,5 +54,22 @@ class MataKuliahController extends Controller
 
         return redirect()->route('matakuliah.index')->with('success', 'Mata Kuliah berhasil ditambahkan!');
     }
+    public function updateStatus(Request $request, MataKuliah $matakuliah)
+    {
+        // Otorisasi: Pastikan user hanya bisa mengubah tugas miliknya sendiri
+        if ($matakuliah->user_id !== Auth::id()) {
+            return response()->json(['success' => false, 'message' => 'Unauthorized'], 403);
+        }
+
+        $request->validate([
+            'status' => 'required|string|in:Selesai,Belum Selesai',
+        ]);
+
+        $matakuliah->status = $request->status;
+        $matakuliah->save();
+
+        return response()->json(['success' => true, 'message' => 'Status berhasil diperbarui.']);
+    }
+
 }
 

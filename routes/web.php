@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/matakuliah', [MataKuliahController::class, 'index'])->name('matakuliah.index');
     Route::get('/matakuliah/create', [MataKuliahController::class, 'create'])->name('matakuliah.create');
     Route::post('/matakuliah', [MataKuliahController::class, 'store'])->name('matakuliah.store');
+    Route::patch('/matakuliah/{matakuliah}/status', [MataKuliahController::class, 'updateStatus'])->name('matakuliah.updateStatus');
 });
 
 
