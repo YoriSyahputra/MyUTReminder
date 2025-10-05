@@ -47,6 +47,8 @@ class MataKuliahController extends Controller
             'jadwal' => 'required|date',
             'tugas' => 'required|string',
         ]);
+        
+        $validatedData['status'] = 'Belum Selesai';
 
         Auth::user()->mataKuliahs()->create($request->all());
 

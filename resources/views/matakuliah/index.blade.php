@@ -22,6 +22,9 @@
                                 <p class="text-sm text-gray-600 dark:text-gray-400">Jadwal: {{ \Carbon\Carbon::parse($matkul->jadwal)->format('d F Y, H:i') }}</p>
                                 <p class="mt-2"><strong>Tugas:</strong> {{ $matkul->tugas }}</p>
                                 <p class="mt-2 text-sm font-semibold">Status: <span class="px-2 py-1 rounded-full {{ $matkul->status == 'Selesai' ? 'bg-green-500 text-white' : 'bg-yellow-500 text-black' }}">{{ $matkul->status }}</span></p>
+                                <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">Dibuat pada: {{ $matkul->created_at->format('d F Y, H:i') }}</p> 
+                                <a href="https://elearning.ut.ac.id/my/" class="mt-2 text-sm font-semibold py-2">Go To: <span class="px-2 py-1 rounded-full bg-blue-600 text-white">Elearning</span></a>
+                                
                             </div>
                         @empty
                             <p>Anda belum menambahkan mata kuliah apapun.</p>
