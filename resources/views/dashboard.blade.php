@@ -98,7 +98,6 @@
             @endif
         </div>
         
-        {{-- ========== KONTEN BOX 3 (Tenggat Waktu Terdekat) ========== --}}
         <div class="div3 flex flex-col">
             <h3 class="text-lg font-bold mb-4">Tenggat Terdekat</h3>
             <div id="upcoming-tasks-list" class="space-y-4 overflow-y-auto pr-2">
